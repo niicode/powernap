@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const DevCoreDev = new Schema({
   name: String,
   role: String,
-  powerNaps:String,
+  powerNaps: String,
   isAdmin: false,
 });
 

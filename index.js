@@ -51,7 +51,10 @@ app.get('/all_devs', (req, res) => {
         err: err,
       });
     }
-    res.json(devs);
+    res.json({
+      succes: true,
+      docs: devs,
+    });
   });
 });
 
@@ -62,31 +65,32 @@ app.get('/dev/:_id', (req, res) => {
     if (err) {
       res.status(400).json({
         success: false,
-        data: 'Bad request made the article does not exist.',
+        data: 'Bad request made the dev does not exist.',
       });
     }
     res.status(200).json({
-      success: true,
-      data: doc,
+      succes: true,
+      data: doc
     });
   });
 });
 
 //update devs info by checking the id of the dev
-app.put('/update_dev/:_id', (req, res) => {
-  let { _id } = req.params;
-  let update = { powerNaps: req.body };
-  Dev.findOneAndUpdate({ _id: _id }, update, (err, doc)=> {
+app.put('/:_id', async (req, res) => {
+  const { _id } = req.params;
+  const data = req.body;
+  Dev.findByIdAndUpdate(_id, data, { new: true }, (err, doc) => {
     if (err) {
       res.json({
-        success: false,
-        err: err
-      })
+        message: 'Not working',
+        error: err,
+      });
+    } else {
+      res.json({
+        message: 'success',
+        doc: doc,
+      });
     }
-    res.json({
-      succes: true,
-      doc: doc
-    })
   });
 });
 
