@@ -70,7 +70,7 @@ app.get('/dev/:_id', (req, res) => {
     }
     res.status(200).json({
       succes: true,
-      data: doc
+      data: doc,
     });
   });
 });
@@ -90,6 +90,27 @@ app.put('/:_id', async (req, res) => {
         message: 'success',
         doc: doc,
       });
+    }
+  });
+});
+
+app.delete('/:_id', async (req, res) => {
+  const { _id } = req.params;
+  Dev.findByIdAndDelete(_id, { new: true }, (err, doc) => {
+    try {
+      if (err) {
+        res.json({
+          message: 'Cannot delet error occured',
+          error: err,
+        });
+      } else {
+        res.json({
+          success: true,
+          message: 'Dev deleted successefully...',
+        });
+      }
+    } catch (e) {
+      res.send(e);
     }
   });
 });
